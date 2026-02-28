@@ -19,16 +19,16 @@ function Footer() {
                         </div>
                     </div>                    
                     <div className="footer-pages-col">
-                        <h3>Pages</h3>
+                        <h3>Paginas</h3>
                         <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/about">About us</Link></li>
-                            <li><Link to="/projects">Projects</Link></li>
-                            <li><Link to="/contact">Contact</Link></li>
+                            <li><Link to="/">Inicio</Link></li>
+                            <li><Link to="/about">Sobre mim</Link></li>
+                            <li><Link to="/projects">Projetos</Link></li>
+                            <li><Link to="/contact">Contato</Link></li>
                         </ul>
                     </div>                   
                     <div className="footer-contact-col">
-                        <h3>Contact</h3>
+                        <h3>Contato</h3>
                         <p className="grey-1-color">jg3043505@gmail.com</p>                        
                     </div>
                 </div>                

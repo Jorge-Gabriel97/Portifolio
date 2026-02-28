@@ -11,10 +11,10 @@ function Header() {
                     <Link to="/"><img src={Logo} alt="Logo Jorge" /></Link>
                     <nav>
                     <ul className="d-flex">
-                        <li><Link to="/home">Home</Link></li>
-                        <li><Link to="/about">About</Link></li>
-                        <li><Link to="/Projects">Projects</Link></li>
-                        <li><Link to="/contact">Contact</Link></li>
+                        <li><Link to="/home">Inicio</Link></li>
+                        <li><Link to="/about">Sobre mim</Link></li>
+                        <li><Link to="/Projects">Projetos</Link></li>
+                        <li><Link to="/contact">Contato</Link></li>
                     </ul>
                 </nav>
                 </div>                

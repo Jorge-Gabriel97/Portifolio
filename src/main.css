@@ -1,9 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-body {
+/* =========================================
+   1. RESET BÁSICO (Sempre no topo!)
+   ========================================= */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img, picture, video, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* =========================================
+   2. ESTILOS BASE (Sua fonte preservada)
+   ========================================= */
+body {
   min-height: 100vh;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Jost', sans-serif; /* Sua fonte original intacta! */
   font-weight: 400;
   color: #292F36;
   background-color: aliceblue;
@@ -13,28 +30,21 @@ a {
   text-decoration: none;
 }
 
-/* --- Cores de Fundo --- */
+/* =========================================
+   3. CORES E UTILITÁRIOS
+   ========================================= */
+/* Cores de Fundo */
 .primary-background { background-color: #0C70F2; }
 .secondary-background { background-color: #1D1D1D; }
 .tertiary-background { background-color: #F6F6F6; }
 
-/* --- Cores de Texto (Corrigido) --- */
+/* Cores de Texto */
 .primary-color { color: #0C70F2; }
 .secondary-color { color: #1D1D1D; }
 .tertiary-color { color: #F6F6F6; }
 .grey-1-color { color: #4D5053; } 
 
-/* --- Estrutura e Layout --- */
-.container {
-  box-sizing: border-box;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1240px;
-  position: relative;
-  padding: 0 30px;
-}
-
-/* --- Utilitários Flexbox (Corrigido) --- */
+/* Flexbox Básicos */
 .d-flex { display: flex; }
 .fd-column { flex-direction: column; }
 .al-center { align-items: center; }
@@ -43,12 +53,38 @@ a {
 .jc-end { justify-content: end; }
 .jc-space-between { justify-content: space-between; }
 
-/* --- Responsividade --- */
-@media (max-width: 768px) {
+/* Utilitário Responsivo (Começa como coluna no celular) */
+.mobile-fd-column { 
+  display: flex;
+  flex-direction: column; 
+}
+
+/* =========================================
+   4. ESTRUTURA E RESPONSIVIDADE (MOBILE FIRST)
+   ========================================= */
+/* Padrão para Celulares */
+.container {
+  width: 100%;
+  padding: 0 16px; /* Respiro lateral um pouco menor para celular */
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Tablets (A partir de 768px) */
+@media (min-width: 768px) {
   .container {
-    width: 90%;
+    padding: 0 30px; /* Volta para o seu padding original em telas maiores */
   }
+  
+  /* Faz a classe mobile-fd-column virar linha (lado a lado) no tablet/desktop */
   .mobile-fd-column {
-    flex-direction: column;
+    flex-direction: row;
+  }
+}
+
+/* Desktops e Telas Grandes (A partir de 1024px) */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1240px; /* Seu limite de largura preservado */
   }
 }

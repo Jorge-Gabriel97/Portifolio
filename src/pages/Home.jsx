@@ -1,19 +1,16 @@
-import Banner from "../componets/Banner/Banner";
-import Button from "../componets/Button/Button";
 import Header from "../componets/Header/Header";
 import Hero from "../componets/Hero/Hero";
 import Footer from "../componets/Footer/Footer";
+import ProjetcsList from "../componets/ProjetcsList/ProjetcsList";
 
 function Home() {
     return (
         <>
-            <Header />
-
-            <h1>Inicio</h1>
-            <p>Subtitle</p>
-            <Button buttonStyle="primary" >Olá!</Button>
+            <Header />            
+            
             <div className="container">
                 <Hero />
+                <ProjetcsList />
             </div>
             <Footer />
         </>

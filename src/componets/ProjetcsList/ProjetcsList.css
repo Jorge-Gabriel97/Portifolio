@@ -1,0 +1,58 @@
+.projetcs-section {
+    margin: 150px 0;
+    text-align: center;
+}
+
+.projetcs-hero{
+    margin: 0 auto 100px auto;
+    max-width: 767px;
+}
+
+.projetcs-hero h2{
+    font-size: 50px;
+}
+
+.projetcs-hero p{
+    font-size: 22px;
+    margin: 10px 0 0 0;
+}
+
+.projetcs-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+}
+
+.projetcs-card .thumb{
+    background-position: center;
+    background-size: cover;
+    border-radius: 37px;
+    height: 430px;
+    width: 100%;
+}
+
+.projetcs-card h3{
+    font-size: 25px;
+    margin: 20px 0 0 0;
+}
+
+.projetcs-card p{
+    font-size: 18px;
+    margin: 20px 0 0 0;
+}
+
+@media  (max-width: 768px) {
+    .projetcs-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    }
+}
+
+@media (max-width: 568px) {
+    .projetcs-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 50px;
+    }
+}

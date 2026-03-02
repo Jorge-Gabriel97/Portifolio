@@ -5,10 +5,13 @@ import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Projects from "./pages/Projects.jsx";
 import Contact from './pages/Contact.jsx'; 
+// Utils
+import ScrollToTop from './Utils/ScrollTop.jsx';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />       

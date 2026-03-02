@@ -1,8 +1,15 @@
+import Header from "../componets/Header/Header";
+import ContactForm from "../componets/ContactForm/ContactForm";
+import Banner from "../componets/Banner/Banner";
+import Footer from "../componets/Footer/Footer";
+
 function Contact() {
     return (
         <>
-        <h1>Contact</h1>
-        <p>Subtitle contact</p>
+            <Header />
+            <Banner title="Contato" image="Contacts.png" />
+            <ContactForm />
+            <Footer />
         </>
     )
 }

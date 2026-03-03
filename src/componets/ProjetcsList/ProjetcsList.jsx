@@ -13,7 +13,7 @@ function ProjetcsList() {
                 const response = await fetch('https://api.github.com/users/Jorge-Gabriel97/repos');
                 const data = await response.json();             
                 
-                // Lista de Projetos Xodós
+                // Lista de projetos favoritos (pode ser ajustada conforme necessário)
                 const favoritos = ["Barber-Maneger", "Jorge-Gabriel97", "Timesend"];
 
                 // Filtragem e Ordenação
@@ -73,14 +73,12 @@ function ProjetcsList() {
                                 {repo.description ? repo.description : "Projeto em desenvolvimento"}
                             </p>
                         )}
-
                         <a href={repo.html_url} target="_blank" rel="noreferrer" className="repo-link">
                             Ver Repositório ➔
                         </a>
                     </div>
                 ))}
             </div>
-
             {visibleCount < projects.length && (
                 <div className="d-flex jc-center" style={{ marginTop: '40px' }}>
                     <Button buttonStyle="primary" onClick={showMoreProjects}>

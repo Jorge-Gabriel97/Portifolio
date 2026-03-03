@@ -7,7 +7,17 @@ function Hero() {
         <div className="hero d-flex al-center">
             <div className="hero-text">
                 <h1>Desenvolvedor Full Stack</h1>
-                <p>Desenvolvedor Full Stack especializado na criação de aplicações completas e eficientes. Possuo sólida vivência no desenvolvimento de interfaces modernas com ecossistema JavaScript/React, além de construir serviços e APIs robustas utilizando Python, Java e Node.js. Com foco em resolução de problemas e entrega de projetos de alta qualidade, estou sempre em busca de projetos desafiadores para contribuir com o sucesso da equipe.</p>
+                <p>Desenvolvedor Full Stack | Graduando em ADS
+
+                    Como estudante de Análise e Desenvolvimento de Sistemas, foco minha trajetória na construção de softwares eficientes, aplicando conceitos de engenharia e Clean Code em cada linha de código.
+
+                    Ecossistema Front-End: Construo interfaces dinâmicas e de alta performance utilizando React e TypeScript, garantindo tipagem segura e componentes reutilizáveis.
+
+                    Arquitetura Back-End: Desenvolvo APIs robustas e escaláveis com Java (Spring Boot) e Node.js, além de criar automações inteligentes e análise de dados com Python.
+
+                    Persistência e Infraestrutura: Experiência prática na modelagem de bancos de dados SQL (PostgreSQL, MySQL) e NoSQL (MongoDB), utilizando Docker e Git para garantir ambientes de desenvolvimento modernos e controle de versão rigoroso.
+
+                    Minha bagagem técnica me permite transitar por todo o ciclo de vida do software, desde o diagnóstico preciso de erros em integrações de APIs até o deploy de soluções completas e seguras.</p>
                 <Link>
                     <Button buttonStyle="secondary" arrow>
                         Saiba mais

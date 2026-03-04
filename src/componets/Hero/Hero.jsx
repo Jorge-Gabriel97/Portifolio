@@ -8,7 +8,7 @@ function Hero() {
             <div className="hero-text">
                 <h1>Desenvolvedor Full Stack</h1>
                 <p>Desenvolvedor Full Stack especializado na criação de aplicações completas e eficientes. Possuo sólida vivência no desenvolvimento de interfaces modernas com ecossistema JavaScript/React, além de construir serviços e APIs robustas utilizando Python, Java e Node.js. Com foco em resolução de problemas e entrega de projetos de alta qualidade, estou sempre em busca de projetos desafiadores para contribuir com o sucesso da equipe.</p>
-                <Link>
+                <Link to="/about">
                     <Button buttonStyle="secondary" arrow>
                         Saiba mais
                     </Button>

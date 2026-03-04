@@ -4,16 +4,17 @@
     padding: 0 20px;
 }
 
-/* O Card de Destaque (Opção 1) */
+/* O Card de Destaque (Light Mode - Padrão) */
 .cta-box {
-    background-color: #f8f9fa; /* Fundo cinza bem claro e moderno */
+    background-color: #f8f9fa; 
     padding: 50px;
     border-radius: 20px;
     text-align: center;
     max-width: 700px;
     width: 100%;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Sombra elegante */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
     border: 1px solid #eaeaea;
+    transition: all 0.3s ease; /* Transição suave para o dark mode */
 }
 
 .cta-box h2 {
@@ -21,6 +22,7 @@
     color: #111;
     margin-bottom: 15px;
     font-weight: 800;
+    transition: color 0.3s ease;
 }
 
 .cta-box p {
@@ -28,13 +30,14 @@
     color: #555;
     margin-bottom: 40px;
     line-height: 1.6;
+    transition: color 0.3s ease;
 }
 
 /* --- Estilização dos Campos do Formulário --- */
 .form-container {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Espaço entre os campos */
+    gap: 20px; 
 }
 
 .form-input, .form-textarea {
@@ -46,20 +49,21 @@
     font-family: inherit;
     transition: all 0.3s ease;
     background-color: #fff;
+    color: #333; /* Adicionado para garantir a cor da fonte ao digitar */
 }
 
 /* Efeito ao clicar no campo de texto */
 .form-input:focus, .form-textarea:focus {
     outline: none;
-    border-color: #0C70F2; /* Sua cor azul principal */
+    border-color: #0C70F2; 
     box-shadow: 0 0 0 3px rgba(12, 112, 242, 0.1);
 }
 
 .form-textarea {
-    resize: vertical; /* Permite ao usuário aumentar a caixa só para baixo */
+    resize: vertical; 
 }
 
-/* Botão de Enviar */
+/* Botão de Enviar (Fica igual nos dois modos) */
 .cta-button {
     background-color: #0C70F2;
     color: white;
@@ -75,7 +79,7 @@
 
 .cta-button:hover {
     background-color: #0056b3;
-    transform: translateY(-2px); /* Efeito de pular levemente */
+    transform: translateY(-2px); 
     box-shadow: 0 5px 15px rgba(12, 112, 242, 0.3);
 }
 
@@ -87,4 +91,44 @@
     .cta-box h2 {
         font-size: 28px;
     }
+}
+
+/* =========================================
+   🌙 OVERRIDES DO DARK MODE
+   Estas regras só ativam se a classe dark-mode existir no pai
+   ========================================= */
+
+.dark-mode .cta-box {
+    background-color: #1e293b; /* Fundo cinza escuro elegante */
+    border-color: #334155;     /* Borda sutil */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4); /* Sombra mais forte no escuro */
+}
+
+.dark-mode .cta-box h2 {
+    color: #f8fafc; /* Branco gelo para o título */
+}
+
+.dark-mode .cta-box p {
+    color: #94a3b8; /* Cinza claro para o texto */
+}
+
+/* Ajuste das caixas de texto do formulário no escuro */
+.dark-mode .form-input, 
+.dark-mode .form-textarea {
+    background-color: #0f172a; /* Fundo mais escuro que o card (dá profundidade) */
+    border-color: #475569;
+    color: #f8fafc; /* Texto digitado fica branco */
+}
+
+/* Ajusta a cor do texto temporário (Placeholder) */
+.dark-mode .form-input::placeholder, 
+.dark-mode .form-textarea::placeholder {
+    color: #64748b;
+}
+
+/* Efeito focus no dark mode (Brilha um pouco diferente) */
+.dark-mode .form-input:focus, 
+.dark-mode .form-textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }

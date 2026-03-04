@@ -69,7 +69,6 @@ function ContactForm() {
                 <div className="cta-box">
                     <h2>Gostou do que viu?</h2>
                     <p>Vamos construir algo incrível juntos.</p>
-
                     <form className="form-container" onSubmit={handleSubmit}>
                         <input
                             type="text"

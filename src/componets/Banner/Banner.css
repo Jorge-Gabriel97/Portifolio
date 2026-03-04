@@ -1,4 +1,4 @@
-.banner{
+.banner {
     background-color: gray;
     background-position: center;
     background-size: cover;
@@ -6,11 +6,21 @@
     width: 100%;
 }
 
-.title-panel{
+.title-panel {
     background-color: white;
+    color: #1D1D1D; /* Garante que o texto fique bem visível no modo claro */
     border-radius: 37px 37px 0 0;
     font-size: 50px;
     height: 150px;
     margin:  0 auto;
     max-width: 500px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave para o dark mode */
+}
+
+/* =========================================
+   🌙 OVERRIDES DO DARK MODE (BANNER)
+   ========================================= */
+.dark-mode .title-panel {
+    background-color: #1e293b; /* O mesmo tom de cinza elegante do Header e do Footer */
+    color: #f8fafc; /* Texto branco gelo para dar um contraste perfeito */
 }

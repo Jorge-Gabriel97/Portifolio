@@ -1,19 +1,29 @@
-.hero{
+.hero {
     background-image: url("/Hero.png");
     background-size: cover;
     background-position: center;
     border-radius: 70px;
     height: 708px;
     padding: 50px;
+    /* Adicionamos uma transição suave para não dar um "susto" na troca de tema */
+    transition: background-image 0.4s ease-in-out; 
 }
 
-.hero h1{
+.hero h1 {
     font-size: 65px;
     line-height: 125%;
+    color: #111; /* Garantimos uma cor escura e forte no modo claro */
+    transition: color 0.3s ease;
 }
 
-.hero-text{
+.hero-text {
     width: 40%;
+}
+
+/* Adicionei essa classe para o seu parágrafo do Hero, caso você queira controlar a transição dele também */
+.hero-text p {
+    color: #333; 
+    transition: color 0.3s ease;
 }
 
 @media  (max-width: 768px) {
@@ -27,6 +37,20 @@
     }
 }
 
-    
-    
-    
+/* =========================================
+   🌙 OVERRIDES DO DARK MODE (HERO)
+   ========================================= */
+
+.dark-mode .hero {
+    /* O Pulo do Gato: Mantém a url(), mas adiciona um gradiente escuro (rgba) por cima da imagem! */
+    background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url("/Hero.png");
+}
+
+.dark-mode .hero h1 {
+    color: #ffffff; /* Texto branco no fundo escurecido */
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Uma sombra leve para desgrudar o texto do fundo */
+}
+
+.dark-mode .hero-text p {
+    color: #cbd5e1; /* Um cinza bem clarinho para o texto de apoio */
+}

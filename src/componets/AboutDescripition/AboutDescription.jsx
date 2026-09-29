@@ -1,108 +1,68 @@
-import "./AboutDescription.css";
 import { FaReact, FaPython, FaJava, FaHtml5, FaCss3Alt, FaNodeJs, FaGitAlt, FaDocker } from "react-icons/fa";
 import { SiJavascript, SiTypescript, SiSpringboot, SiPostgresql, SiMysql, SiMongodb } from "react-icons/si";
+import Reveal from "../../Utils/Reveal";
+
+const STACK_GROUPS = [
+    {
+        label: "Front-end",
+        items: [
+            { icon: FaReact, name: "React", color: "#61DAFB" },
+            { icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
+            { icon: SiJavascript, name: "JavaScript", color: "#F7DF1E" },
+            { icon: FaHtml5, name: "HTML5", color: "#E34F26" },
+            { icon: FaCss3Alt, name: "CSS3", color: "#1572B6" },
+        ],
+    },
+    {
+        label: "Back-end",
+        items: [
+            { icon: FaJava, name: "Java", color: "#ED8B00" },
+            { icon: SiSpringboot, name: "Spring Boot", color: "#6DB33F" },
+            { icon: FaNodeJs, name: "Node.js", color: "#339933" },
+            { icon: FaPython, name: "Python", color: "#3776AB" },
+        ],
+    },
+    {
+        label: "Dados & Infra",
+        items: [
+            { icon: SiPostgresql, name: "PostgreSQL", color: "#4169E1" },
+            { icon: SiMysql, name: "MySQL", color: "#4479A1" },
+            { icon: SiMongodb, name: "MongoDB", color: "#47A248" },
+            { icon: FaGitAlt, name: "Git", color: "#F05032" },
+            { icon: FaDocker, name: "Docker", color: "#2496ED" },
+        ],
+    },
+];
 
 function AboutDescription() {
     return (
-        <div className="container">
-            {/* Adicionando nossa classe mobile-fd-column para responsividade */}
-            <div className="text-section d-flex mobile-fd-column">
+        <div className="py-20 md:py-28">
+            <Reveal className="max-w-3xl">
+                <h2 className="font-serif text-3xl text-slate-900 dark:text-white md:text-4xl">
+                    Desenvolvedor Full Stack
+                </h2>
+                <p className="mt-6 text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+                    Graduando em Análise e Desenvolvimento de Sistemas, construindo software com engenharia e Clean Code em cada camada: interfaces em React/TypeScript, APIs em Java (Spring Boot) e Node.js, automações em Python, e persistência em SQL e NoSQL — tudo versionado e containerizado para rodar igual do meu ambiente até a produção.
+                </p>
+            </Reveal>
 
-                <div className="text-section-text">
-                    <h2>Desenvolvedor Full Stack</h2>
-
-                    <p className="primary-color description-text">
-                        Como graduando de Análise e Desenvolvimento de Sistemas, foco minha trajetória na construção de softwares eficientes, aplicando conceitos de engenharia e Clean Code em cada linha de código.
-                        Ecossistema Front-End: Construo interfaces dinâmicas e de alta performance utilizando React e TypeScript, garantindo tipagem segura e componentes reutilizáveis.
-                        Arquitetura Back-End: Desenvolvo APIs robustas e escaláveis com Java (Spring Boot) e Node.js, além de criar automações inteligentes e análise de dados com Python.
-                        Persistência e Infraestrutura: Experiência prática na modelagem de bancos de dados SQL (PostgreSQL, MySQL) e NoSQL (MongoDB), utilizando Docker e Git para garantir ambientes de desenvolvimento modernos e controle de versão rigoroso.
-                        Minha bagagem técnica me permite transitar por todo o ciclo de vida do software, desde o diagnóstico preciso de erros em integrações de APIs até o deploy de soluções completas e seguras.
-                    </p>
-
-                    {/* === NOVA SEÇÃO DE ÍCONES (TECH STACK) === */}
-                    <div className="tech-stack">
-                        <h3>Minhas Principais Tecnologias</h3>
-                        <div className="icons-container d-flex">
-
-                            <div className="tech-icon">
-                                <FaReact color="#61DAFB" />
-                                <span>React</span>
-                            </div>
-
-                            <div className="tech-icon">
-                                <FaPython color="#3776AB" />
-                                <span>Python</span>
-                            </div>
-
-                            <div className="tech-icon">
-                                <FaJava color="#ED8B00" />
-                                <span>Java</span>
-                            </div>
-
-                            <div className="tech-icon">
-                                <SiJavascript color="#F7DF1E" />
-                                <span>JavaScript</span>
-                            </div>
-
-                            <div className="tech-icon">
-                                <FaHtml5 color="#E34F26" />
-                                <span>HTML5</span>
-                            </div>
-
-                            <div className="tech-icon">
-                                <FaCss3Alt color="#1572B6" />
-                                <span>CSS3</span>
-                            </div>
-
-                            {/* Node.js */}
-                            <div className="tech-icon">
-                                <FaNodeJs color="#339933" />
-                                <span>Node.js</span>
-                            </div>
-
-                            {/* TypeScript */}
-                            <div className="tech-icon">
-                                <SiTypescript color="#3178C6" />
-                                <span>TypeScript</span>
-                            </div>
-
-                            {/* Spring Boot */}
-                            <div className="tech-icon">
-                                <SiSpringboot color="#6DB33F" />
-                                <span>Spring Boot</span>
-                            </div>
-
-                            {/* Bancos de Dados Relacionais e NoSQL */}
-                            <div className="tech-icon">
-                                <SiPostgresql color="#4169E1" />
-                                <span>PostgreSQL</span>
-                            </div>
-
-                            <div className="tech-icon">
-                                <SiMysql color="#4479A1" />
-                                <span>MySQL</span>
-                            </div>
-
-                            <div className="tech-icon">
-                                <SiMongodb color="#47A248" />
-                                <span>MongoDB</span>
-                            </div>
-
-                            {/* Versionamento e Infraestrutura */}
-                            <div className="tech-icon">
-                                <FaGitAlt color="#F05032" />
-                                <span>Git</span>
-                            </div>
-
-                            <div className="tech-icon">
-                                <FaDocker color="#2496ED" />
-                                <span>Docker</span>
-                            </div>
-
+            <div className="mt-16 grid gap-10 md:grid-cols-3">
+                {STACK_GROUPS.map((group, index) => (
+                    <Reveal key={group.label} delay={index * 0.1}>
+                        <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{group.label}</h3>
+                        <div className="mt-5 flex flex-wrap gap-x-6 gap-y-5">
+                            {group.items.map((item) => {
+                                const IconComp = item.icon;
+                                return (
+                                    <div key={item.name} className="flex flex-col items-center gap-2 transition-transform duration-300 hover:-translate-y-1.5">
+                                        <IconComp size={36} color={item.color} />
+                                        <span className="text-xs font-medium text-slate-600 dark:text-slate-400">{item.name}</span>
+                                    </div>
+                                );
+                            })}
                         </div>
-                    </div>
-
-                </div>
+                    </Reveal>
+                ))}
             </div>
         </div>
     )

@@ -43,7 +43,7 @@ export const AppProvider = ({ children }) => {
     return (
         // 3. O Provider agora distribui seus repositórios, o loading e as funções de tema
         <AppContext.Provider value={{ repos, loading, isDarkMode, toggleTheme }}>
-            <div className={isDarkMode ? 'dark-mode' : 'light-mode'} style={{ minHeight: '100vh' }}>
+            <div className={`${isDarkMode ? 'dark' : ''} min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-50 transition-colors duration-300`}>
                 {children}
             </div>
         </AppContext.Provider>

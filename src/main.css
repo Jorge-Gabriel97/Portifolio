@@ -7,45 +7,86 @@
 @theme {
   --font-sans: 'Jost', sans-serif;
   --font-serif: 'DM Serif Display', serif;
+
+  /* Paleta "coastal modern". Troque aqui para mudar o site inteiro.
+     Uso: bg-areia, text-oceano, border-mar, from-sol etc. */
+  --color-areia: #F4EBE1;        /* fundo claro das seções */
+  --color-areia-escura: #E7D8C6; /* bordas e detalhes sobre a areia */
+  --color-oceano: #1A365D;       /* texto principal e fundos escuros */
+  --color-oceano-fundo: #0F2440; /* fundo do modo escuro */
+  --color-mar: #319795;          /* destaques */
+  --color-sol: #DD6B20;          /* decoração (sol, detalhes). Não usar em texto pequeno */
+  --color-coral: #B7521B;        /* versão do sol com contraste para texto e botões */
+
+  /* Animações do tema (definidas mais abaixo) */
+  --animate-onda-lenta: onda 18s linear infinite;
+  --animate-onda-rapida: onda 11s linear infinite;
+  --animate-nuvem: nuvem 40s linear infinite;
+  --animate-sol: sol 8s ease-in-out infinite;
+  --animate-reflexo: reflexo 6s ease-in-out infinite;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ---------- Animações do tema praia ---------- */
+
+/* Ondas: o SVG tem o dobro da largura e anda meia largura, então o loop não tem emenda */
+@keyframes onda {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-img, picture, video, iframe {
-  max-width: 100%;
-  height: auto;
-  display: block;
+/* Nuvens atravessando o céu devagar */
+@keyframes nuvem {
+  from { transform: translateX(-20vw); }
+  to   { transform: translateX(110vw); }
 }
 
-body {
-  min-height: 100vh;
-  font-family: var(--font-sans);
-  font-weight: 400;
+/* Sol "respirando" sobre o horizonte */
+@keyframes sol {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(6px) scale(1.03); }
 }
 
-a {
-  text-decoration: none;
+/* Brilho da água passando pela superfície */
+@keyframes reflexo {
+  0%, 100% { opacity: 0.15; transform: scaleX(0.8); }
+  50%      { opacity: 0.45; transform: scaleX(1); }
 }
 
-.container {
-  width: 100%;
-  padding: 0 16px;
-  margin: 0 auto;
-  position: relative;
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding: 0 30px;
+/* Quem pede menos movimento no sistema não vê animações decorativas */
+@media (prefers-reduced-motion: reduce) {
+  .animate-onda-lenta, .animate-onda-rapida, .animate-nuvem, .animate-sol, .animate-reflexo {
+    animation: none !important;
   }
 }
 
-@media (min-width: 1024px) {
-  .container {
+/* Estilos gerais ficam na camada "base": assim as classes do Tailwind (p-6, px-7, underline...)
+   continuam valendo. Fora de uma camada, "* { padding: 0 }" anulava todo espaçamento do Tailwind.
+   O reset de margin/padding/box-sizing e de imagens já vem no preflight do Tailwind. */
+@layer base {
+  body {
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    font-weight: 400;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+/* Substitui o "container" padrão do Tailwind. Só define o espaçamento lateral (padding-inline),
+   para classes como pt-10 e pb-24 usadas junto com "container" continuarem funcionando. */
+@utility container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 16px;
+  position: relative;
+
+  @media (width >= 768px) {
+    padding-inline: 30px;
+  }
+
+  @media (width >= 1024px) {
     max-width: 1240px;
   }
 }

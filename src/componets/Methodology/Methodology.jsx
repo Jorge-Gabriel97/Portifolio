@@ -22,21 +22,21 @@ function Methodology() {
     return (
         <section className="py-20 md:py-28">
             <Reveal className="max-w-2xl">
-                <h2 className="font-serif text-3xl text-slate-900 dark:text-white md:text-4xl">
+                <h2 className="font-serif text-3xl  md:text-4xl">
                     Como eu trabalho
                 </h2>
-                <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-                    Follow the Data Flow: um método próprio para rastrear cada dado do ponto de origem até a tela, evitando os bugs que nascem de suposição.
+                <p className="mt-4 text-lg text-oceano/80 dark:text-slate-300">
+                    Aplico o Follow the Data Flow, método que aprendi nos estudos: rastrear cada dado do ponto de origem até a tela, evitando os bugs que nascem de suposição.
                 </p>
             </Reveal>
 
             <div className="mt-14 grid gap-8 md:grid-cols-3">
                 {STEPS.map((step, index) => (
                     <Reveal key={step.number} delay={index * 0.1}>
-                        <div className="h-full rounded-3xl border border-slate-200 p-8 dark:border-slate-800">
-                            <span className="font-serif text-4xl text-blue-600 dark:text-blue-400">{step.number}</span>
-                            <h3 className="mt-4 text-xl font-semibold text-slate-900 dark:text-white">{step.title}</h3>
-                            <p className="mt-3 text-slate-600 dark:text-slate-400">{step.text}</p>
+                        <div className="h-full rounded-3xl border border-areia-escura bg-white/70 p-8 dark:border-white/10 dark:bg-oceano/60">
+                            <span className="font-serif text-4xl text-coral dark:text-[#FBD38D]">{step.number}</span>
+                            <h3 className="mt-4 text-xl font-semibold ">{step.title}</h3>
+                            <p className="mt-3 text-oceano/80 dark:text-slate-300">{step.text}</p>
                         </div>
                     </Reveal>
                 ))}

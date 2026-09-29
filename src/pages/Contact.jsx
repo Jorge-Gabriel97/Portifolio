@@ -7,12 +7,13 @@ function Contact() {
     return (
         <>
             <Header />
-            <Banner title="Contato" image="Contacts.png" />
-            <ContactForm />
+            <Banner title="Contato" subtitle="Vaga, projeto ou uma conversa sobre tecnologia." />
+            <main className="flex-1">
+                <ContactForm />
+            </main>
             <Footer />
         </>
     )
 }
-
 
 export default Contact

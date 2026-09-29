@@ -60,16 +60,16 @@ function ContactForm() {
         }
     };
 
-    const inputClasses = "w-full rounded-lg border border-slate-300 bg-white px-4 py-4 text-slate-800 transition-colors duration-300 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-blue-400 dark:focus:ring-blue-400/20";
+    const inputClasses = "w-full rounded-2xl border border-areia-escura bg-white px-4 py-4 text-oceano transition-colors duration-300 placeholder:text-[#5A6B82] focus:border-mar focus:outline-none focus:ring-2 focus:ring-mar/30 dark:border-white/15 dark:bg-oceano-fundo dark:text-white dark:placeholder:text-slate-400 dark:focus:border-[#4FD1C5]";
 
     return (
         <div className="container py-20 md:py-28">
-            <Reveal className="mx-auto flex max-w-2xl flex-col items-center rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm dark:border-slate-800 dark:bg-slate-800/50 md:p-14">
-                <h2 className="font-serif text-3xl text-slate-900 dark:text-white md:text-4xl">
-                    Vamos conversar sobre o seu projeto?
+            <Reveal className="mx-auto flex max-w-2xl flex-col items-center rounded-3xl border border-areia-escura bg-white/70 p-8 text-center shadow-sm dark:border-white/10 dark:bg-oceano/60 md:p-14">
+                <h2 className="font-serif text-3xl md:text-4xl">
+                    Vamos conversar?
                 </h2>
-                <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-                    Conta o que precisa construir — eu respondo com os próximos passos.
+                <p className="mt-4 text-lg text-oceano/80 dark:text-slate-300">
+                    Vaga, projeto freelance ou dúvida sobre algum repositório: me escreva e eu respondo por e-mail.
                 </p>
                 <form className="mt-10 flex w-full flex-col gap-5" onSubmit={handleSubmit}>
                     <input
@@ -77,6 +77,7 @@ function ContactForm() {
                         name="name"
                         value={formData.name}
                         placeholder="Seu nome"
+                        aria-label="Seu nome"
                         className={inputClasses}
                         required
                         onChange={handleChange}
@@ -86,6 +87,7 @@ function ContactForm() {
                         name="email"
                         value={formData.email}
                         placeholder="Seu e-mail"
+                        aria-label="Seu e-mail"
                         className={inputClasses}
                         required
                         onChange={handleChange}
@@ -94,6 +96,7 @@ function ContactForm() {
                         name="message"
                         value={formData.message}
                         placeholder="Como posso te ajudar?"
+                        aria-label="Como posso te ajudar?"
                         className={`${inputClasses} resize-y`}
                         rows="5"
                         required
@@ -103,13 +106,13 @@ function ContactForm() {
                     <button
                         type="submit"
                         disabled={!isFormValid || formSubmitLoading}
-                        className="mt-2 cursor-pointer rounded-lg bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg disabled:pointer-events-none disabled:opacity-50"
+                        className="mt-2 cursor-pointer rounded-full bg-coral px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#9C4221] hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-mar disabled:pointer-events-none disabled:opacity-60"
                     >
                         {formSubmitLoading ? "Enviando..." : "Enviar mensagem ➔"}
                     </button>
                 </form>
                 {formSubmitted && (
-                    <p className="mt-4 font-medium text-emerald-600 dark:text-emerald-400">
+                    <p role="status" className="mt-4 font-medium text-[#22716F] dark:text-[#4FD1C5]">
                         Obrigado! Entrarei em contato em breve.
                     </p>
                 )}

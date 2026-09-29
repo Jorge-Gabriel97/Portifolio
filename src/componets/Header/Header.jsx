@@ -1,11 +1,11 @@
 import { useState, useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from 'framer-motion';
 
 const MotionOverlay = motion.div;
 const MotionNav = motion.nav;
 //Assets
-import Logo from "../../assets/Logo.png";
+import Logo from "../../assets/foto-jorge.jpg";
 
 import { AppContext } from '../contexts/Appcontext.jsx';
 
@@ -26,11 +26,11 @@ function Header() {
     const toggleMenu = () => setIsOpen((prev) => !prev);
 
     return (
-        <header className="sticky top-0 z-50 border-b border-slate-200 bg-slate-50/80 backdrop-blur-md transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900/80">
+        <header className="sticky top-0 z-50 border-b border-areia-escura bg-areia/85 backdrop-blur-md transition-colors duration-300 dark:border-white/10 dark:bg-oceano-fundo/85">
             <div className="container">
                 <div className="flex items-center justify-between py-4">
                     <Link to="/">
-                        <img src={Logo} alt="Logo Jorge Gabriel" className="h-12 w-12 rounded-full object-cover" />
+                        <img src={Logo} alt="Foto de Jorge Gabriel" className="h-12 w-12 rounded-full object-cover" />
                     </Link>
 
                     <div className="md:hidden">
@@ -41,12 +41,18 @@ function Header() {
                         <ul className="flex items-center gap-10">
                             {NAV_LINKS.map((link) => (
                                 <li key={link.to}>
-                                    <Link
+                                    {/* Página atual ganha um sublinhado cor de sol */}
+                                    <NavLink
                                         to={link.to}
-                                        className="text-base font-medium text-slate-700 transition-colors hover:text-blue-600 dark:text-slate-200 dark:hover:text-blue-400"
+                                        end
+                                        className={({ isActive }) =>
+                                            `text-base font-medium underline-offset-8 transition-colors hover:text-[#22716F] dark:hover:text-[#4FD1C5] ${
+                                                isActive ? 'underline decoration-coral decoration-2' : 'text-oceano/85 dark:text-slate-200'
+                                            }`
+                                        }
                                     >
                                         {link.label}
-                                    </Link>
+                                    </NavLink>
                                 </li>
                             ))}
                         </ul>
@@ -70,12 +76,12 @@ function Header() {
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
                             transition={{ type: 'tween', duration: 0.35, ease: 'easeInOut' }}
-                            className="fixed inset-y-0 right-0 z-50 flex w-4/5 max-w-xs flex-col gap-2 bg-slate-900 p-8 md:hidden"
+                            className="fixed inset-y-0 right-0 z-50 flex w-4/5 max-w-xs flex-col gap-2 bg-oceano p-8 md:hidden"
                         >
                             <button
                                 onClick={toggleMenu}
                                 aria-label="Fechar menu"
-                                className="mb-6 self-end cursor-pointer bg-transparent text-3xl leading-none text-white transition-colors hover:text-blue-400"
+                                className="mb-6 self-end cursor-pointer bg-transparent text-3xl leading-none text-white transition-colors hover:text-[#FBD38D]"
                             >
                                 ×
                             </button>
@@ -105,7 +111,7 @@ function Header() {
 
 function ThemeSwitch({ isDarkMode, toggleTheme }) {
     return (
-        <label className="relative inline-flex h-8 w-14 cursor-pointer items-center rounded-full bg-slate-300 transition-colors duration-300 dark:bg-blue-600">
+        <label className="relative inline-flex h-8 w-14 cursor-pointer items-center rounded-full bg-areia-escura transition-colors duration-300 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-mar dark:bg-mar">
             <input
                 type="checkbox"
                 checked={isDarkMode}

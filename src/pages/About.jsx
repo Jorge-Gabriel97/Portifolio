@@ -8,11 +8,11 @@ function About() {
     return (
         <>
             <Header />
-            <Banner title="Sobre mim" image="About.png" />
-            <div className="container">
+            <Banner title="Sobre mim" subtitle="Do suporte técnico e das redes ao desenvolvimento Full Stack." />
+            <main className="container flex-1">
                 <AboutDescription />
                 <Methodology />
-            </div>
+            </main>
             <Footer />
         </>
     )

@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -61,50 +62,55 @@ function Header() {
                 </div>
             </div>
 
-            <AnimatePresence>
-                {isOpen && (
-                    <>
-                        <MotionOverlay
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={toggleMenu}
-                            className="fixed inset-0 z-40 bg-black/60 md:hidden"
-                        />
-                        <MotionNav
-                            initial={{ x: '100%' }}
-                            animate={{ x: 0 }}
-                            exit={{ x: '100%' }}
-                            transition={{ type: 'tween', duration: 0.35, ease: 'easeInOut' }}
-                            className="fixed inset-y-0 right-0 z-50 flex w-4/5 max-w-xs flex-col gap-2 bg-oceano p-8 md:hidden"
-                        >
-                            <button
+            {/* Portal: o backdrop-blur do header vira o "contêiner" de elementos fixed dentro dele,
+                e o menu ficaria preso à altura do header, com os links vazando sobre a página */}
+            {createPortal(
+                <AnimatePresence>
+                    {isOpen && (
+                        <>
+                            <MotionOverlay
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
                                 onClick={toggleMenu}
-                                aria-label="Fechar menu"
-                                className="mb-6 self-end cursor-pointer bg-transparent text-3xl leading-none text-white transition-colors hover:text-[#FBD38D]"
+                                className="fixed inset-0 z-[80] bg-black/60 md:hidden"
+                            />
+                            <MotionNav
+                                initial={{ x: '100%' }}
+                                animate={{ x: 0 }}
+                                exit={{ x: '100%' }}
+                                transition={{ type: 'tween', duration: 0.35, ease: 'easeInOut' }}
+                                className="fixed inset-y-0 right-0 z-[80] flex w-4/5 max-w-xs flex-col gap-2 bg-oceano p-8 md:hidden"
                             >
-                                ×
-                            </button>
-                            <ul className="flex flex-col gap-1">
-                                {NAV_LINKS.map((link) => (
-                                    <li key={link.to}>
-                                        <Link
-                                            to={link.to}
-                                            onClick={toggleMenu}
-                                            className="block border-b border-white/15 py-3 text-lg text-white"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                            <div className="mt-6">
-                                <ThemeSwitch isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
-                            </div>
-                        </MotionNav>
-                    </>
-                )}
-            </AnimatePresence>
+                                <button
+                                    onClick={toggleMenu}
+                                    aria-label="Fechar menu"
+                                    className="mb-6 self-end cursor-pointer bg-transparent text-3xl leading-none text-white transition-colors hover:text-[#FBD38D]"
+                                >
+                                    ×
+                                </button>
+                                <ul className="flex flex-col gap-1">
+                                    {NAV_LINKS.map((link) => (
+                                        <li key={link.to}>
+                                            <Link
+                                                to={link.to}
+                                                onClick={toggleMenu}
+                                                className="block border-b border-white/15 py-3 text-lg text-white"
+                                            >
+                                                {link.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <div className="mt-6">
+                                    <ThemeSwitch isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+                                </div>
+                            </MotionNav>
+                        </>
+                    )}
+                </AnimatePresence>,
+                document.body,
+            )}
         </header>
     )
 }

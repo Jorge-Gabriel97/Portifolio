@@ -1,11 +1,13 @@
 import { useCallback, useContext, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AppContext } from "../contexts/AppContext.js";
 import Button from '../Button/Button';
 import Reveal from '../../Utils/Reveal';
 import TituloSecao from '../Kit/TituloSecao';
 import CartaoInclinavel from '../Kit/CartaoInclinavel';
 import FichaProjeto from './FichaProjeto';
+import FiltroPorto from './FiltroPorto';
+import { TODOS, grupoDoRepo, montarFiltros } from './filtros';
 
 const MotionDiv = motion.div;
 
@@ -33,11 +35,21 @@ function ProjetcsList() {
     const { repos, loading } = useContext(AppContext);
     const [visibleCount, setVisibleCount] = useState(8);
     const [fichaAberta, setFichaAberta] = useState(null);
+    const [filtro, setFiltro] = useState(TODOS);
+    const reduzirMovimento = useReducedMotion();
 
     const featuredNames = FEATURED_CASES.map((c) => c.repoName);
     const otherRepos = repos.filter(
         (repo) => !EXCLUDED_REPOS.includes(repo.name) && !featuredNames.includes(repo.name)
     );
+
+    const filtros = montarFiltros(otherRepos);
+    const reposFiltrados = filtro === TODOS ? otherRepos : otherRepos.filter((repo) => grupoDoRepo(repo) === filtro);
+
+    const escolherFiltro = (nome) => {
+        setFiltro(nome);
+        setVisibleCount(8);
+    };
 
     const showMoreProjects = () => setVisibleCount((count) => count + 8);
     const repoDaFicha = repos.find((r) => r.id === fichaAberta);
@@ -107,59 +119,73 @@ function ProjetcsList() {
             {loading ? (
                 <p className="mt-16 text-center text-oceano/75 dark:text-slate-400">Carregando projetos...</p>
             ) : (
-                <div id="repositorios" className="mt-12 grid scroll-mt-24 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {otherRepos.slice(0, visibleCount).map((repo) => (
-                        // Mesmo layoutId da ficha: ao abrir, este cartão "cresce" até virar a janela.
-                        // Enquanto a ficha está aberta, o cartão fica invisível guardando o lugar.
-                        <MotionDiv
-                            key={repo.id}
-                            layoutId={`cartao-${repo.id}`}
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                            className={`rounded-3xl ${fichaAberta === repo.id ? "invisible" : ""}`}
-                        >
-                            <CartaoInclinavel className="rounded-3xl">
-                                <div className="cartao flex h-full flex-col overflow-hidden p-5 transition-shadow duration-300 hover:shadow-lg">
-                                    <div className="h-40 w-full flex-shrink-0 overflow-hidden rounded-xl bg-areia-escura dark:bg-oceano">
-                                        <img
-                                            src={imagemDoRepo(repo)}
-                                            alt=""
-                                            loading="lazy"
-                                            className="h-full w-full object-cover"
-                                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                                        />
-                                    </div>
+                <div id="repositorios" className="mt-16 scroll-mt-24">
+                    <FiltroPorto filtros={filtros} ativo={filtro} aoEscolher={escolherFiltro} />
+                    <p aria-live="polite" className="mt-4 text-sm text-oceano/70 dark:text-slate-400">
+                        {reposFiltrados.length} {reposFiltrados.length === 1 ? "projeto" : "projetos"}
+                        {filtro !== TODOS && ` em ${filtro}`}
+                    </p>
 
-                                    <h3 className="mt-4 truncate text-lg font-semibold">{repo.name}</h3>
-                                    <p className="mt-1 line-clamp-2 text-sm text-oceano/75 dark:text-slate-300">
-                                        {repo.description || "Projeto em desenvolvimento"}
-                                    </p>
-
-                                    <div className="mt-auto flex items-center justify-between gap-3 pt-5">
-                                        <button
-                                            type="button"
-                                            data-ficha={repo.id}
-                                            onClick={() => setFichaAberta(repo.id)}
-                                            className="cursor-pointer rounded-full border border-oceano/40 px-4 py-1.5 text-sm font-semibold transition-colors duration-300 hover:bg-oceano hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-mar dark:border-white/40 dark:hover:bg-areia dark:hover:text-oceano"
-                                        >
-                                            Ficha técnica +
-                                        </button>
-                                        <a
-                                            href={repo.html_url}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="text-sm font-semibold text-[#22716F] hover:underline dark:text-[#4FD1C5]"
-                                        >
-                                            GitHub ↗
-                                        </a>
-                                    </div>
-                                </div>
-                            </CartaoInclinavel>
-                        </MotionDiv>
-                    ))}
+                    <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                        {/* popLayout: quem sai do filtro zarpa (afunda) enquanto os outros já atracam no lugar */}
+                        <AnimatePresence mode="popLayout" initial={false}>
+                            {reposFiltrados.slice(0, visibleCount).map((repo, indice) => (
+                                // Mesmo layoutId da ficha: ao abrir, este cartão "cresce" até virar a janela.
+                                // Enquanto a ficha está aberta, o cartão fica invisível guardando o lugar.
+                                <MotionDiv
+                                    key={repo.id}
+                                    layoutId={`cartao-${repo.id}`}
+                                    initial={reduzirMovimento ? false : { opacity: 0, y: 48, rotate: -2 }}
+                                    animate={{ opacity: 1, y: 0, rotate: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: Math.min(indice, 7) * 0.04 } }}
+                                    exit={reduzirMovimento ? { opacity: 0 } : { opacity: 0, y: 48, rotate: 2, transition: { duration: 0.3 } }}
+                                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                    className={`rounded-3xl ${fichaAberta === repo.id ? "invisible" : ""}`}
+                                >
+                                    <CartaoInclinavel className="rounded-3xl">
+                                        <div className="cartao flex h-full flex-col overflow-hidden p-5 transition-shadow duration-300 hover:shadow-lg">
+                                            <div className="h-40 w-full flex-shrink-0 overflow-hidden rounded-xl bg-areia-escura dark:bg-oceano">
+                                                <img
+                                                    src={imagemDoRepo(repo)}
+                                                    alt=""
+                                                    loading="lazy"
+                                                    className="h-full w-full object-cover"
+                                                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                                />
+                                            </div>
+        
+                                            <h3 className="mt-4 truncate text-lg font-semibold">{repo.name}</h3>
+                                            <p className="mt-1 line-clamp-2 text-sm text-oceano/75 dark:text-slate-300">
+                                                {repo.description || "Projeto em desenvolvimento"}
+                                            </p>
+        
+                                            <div className="mt-auto flex items-center justify-between gap-3 pt-5">
+                                                <button
+                                                    type="button"
+                                                    data-ficha={repo.id}
+                                                    onClick={() => setFichaAberta(repo.id)}
+                                                    className="cursor-pointer rounded-full border border-oceano/40 px-4 py-1.5 text-sm font-semibold transition-colors duration-300 hover:bg-oceano hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-mar dark:border-white/40 dark:hover:bg-areia dark:hover:text-oceano"
+                                                >
+                                                    Ficha técnica +
+                                                </button>
+                                                <a
+                                                    href={repo.html_url}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="text-sm font-semibold text-[#22716F] hover:underline dark:text-[#4FD1C5]"
+                                                >
+                                                    GitHub ↗
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </CartaoInclinavel>
+                                </MotionDiv>
+                            ))}
+                        </AnimatePresence>
+                    </div>
                 </div>
             )}
 
-            {!loading && visibleCount < otherRepos.length && (
+            {!loading && visibleCount < reposFiltrados.length && (
                 <div className="mt-12 flex justify-center">
                     <Button buttonStyle="primary" onClick={showMoreProjects}>
                         Ver mais projetos

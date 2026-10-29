@@ -12,6 +12,7 @@ export const GRUPOS = [
     {
         id: "front",
         titulo: "Front-end",
+        resumo: "O que a pessoa vê e usa: telas responsivas, rápidas e acessíveis.",
         habilidades: [
             {
                 nome: "React",
@@ -43,6 +44,7 @@ export const GRUPOS = [
     {
         id: "back",
         titulo: "Back-end",
+        resumo: "Regras de negócio, APIs e segurança rodando no servidor.",
         habilidades: [
             {
                 nome: "Java",
@@ -69,6 +71,7 @@ export const GRUPOS = [
     {
         id: "dados",
         titulo: "Dados",
+        resumo: "Onde a informação fica guardada, organizada e consultada.",
         habilidades: [
             { nome: "PostgreSQL", detalhe: "Persistência com JPA.", projetos: ["aprendendo-spring"] },
             { nome: "MySQL", detalhe: "Banco do sistema de estoque.", projetos: ["ControllerEstoque"] },
@@ -79,6 +82,7 @@ export const GRUPOS = [
     {
         id: "qualidade",
         titulo: "Qualidade e ferramentas",
+        resumo: "Testes e automação que mantêm o resto funcionando.",
         habilidades: [
             { nome: "JUnit e Mockito", detalhe: "Testes de regra de negócio e de API.", projetos: ["descontosBlackfriday"] },
             { nome: "Vitest", detalhe: "Testes de componentes React.", projetos: ["Project-Kanban"] },

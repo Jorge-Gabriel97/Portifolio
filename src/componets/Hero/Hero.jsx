@@ -1,10 +1,13 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../../Utils/Reveal";
 import Ondas from "../Praia/Ondas";
+import PorDoSol from "../Praia/PorDoSol";
 
 /*
  * HERO: fim de tarde na praia.
- * Camadas, de trás para frente: céu em degradê > sol > nuvens > reflexo na água > texto > ondas.
+ * Camadas, de trás para frente: céu em degradê > pôr do sol (céu da noite, estrelas, sol e mar
+ * interativo, em Praia/PorDoSol.jsx) > nuvens > véu > texto > ondas. Ao rolar, o sol se põe.
  * O texto fica sobre a parte escura do céu, então o contraste com o branco é alto
  * mesmo com o degradê (verificado para o texto normal, não só para títulos).
  *
@@ -31,26 +34,19 @@ function Nuvem({ className, style }) {
 }
 
 function Hero() {
+    const secaoRef = useRef(null);
     return (
         <section
+            ref={secaoRef}
             id="inicio"
             aria-label="Apresentação"
             className="relative isolate flex min-h-[620px] items-center overflow-hidden rounded-t-[40px] bg-gradient-to-b from-oceano via-[#2C5282] to-[#E9A46A] px-6 pb-28 pt-16 md:px-16"
         >
-            {/* Sol se pondo no horizonte */}
-            {/* No celular o sol fica menor e mais à direita, para não ficar atrás dos botões */}
-            <div className="animate-sol absolute bottom-16 right-[-10%] -z-10 h-28 w-28 rounded-full opacity-90 sm:bottom-24 sm:right-[12%] sm:h-40 sm:w-40 sm:opacity-100 bg-gradient-to-b from-[#F6AD55] to-sol shadow-[0_0_120px_40px_rgba(221,107,32,0.45)] md:h-56 md:w-56" />
+            <PorDoSol alvoRef={secaoRef} variante="hero" />
 
             {/* Nuvens minimalistas (delays negativos para já começarem espalhadas) */}
             <Nuvem className="animate-nuvem top-12 -z-10 opacity-80" style={{ animationDelay: "-5s" }} />
             <Nuvem className="animate-nuvem top-32 -z-10 scale-75 opacity-60" style={{ animationDelay: "-22s" }} />
-
-            {/* Reflexo do sol na água */}
-            <div className="absolute bottom-16 right-[10%] -z-10 hidden w-64 flex-col items-center gap-2 sm:flex md:bottom-24">
-                <span className="animate-reflexo h-1 w-40 rounded-full bg-[#FBD38D]" />
-                <span className="animate-reflexo h-1 w-28 rounded-full bg-[#FBD38D]" style={{ animationDelay: "-2s" }} />
-                <span className="animate-reflexo h-1 w-16 rounded-full bg-[#FBD38D]" style={{ animationDelay: "-4s" }} />
-            </div>
 
             {/* Véu escuro atrás do texto: garante leitura em qualquer ponto do degradê */}
             <div className="absolute inset-0 -z-10 bg-gradient-to-r from-oceano/85 via-oceano/40 to-transparent" />

@@ -23,8 +23,6 @@
   --animate-onda-lenta: onda 18s linear infinite;
   --animate-onda-rapida: onda 11s linear infinite;
   --animate-nuvem: nuvem 40s linear infinite;
-  --animate-sol: sol 8s ease-in-out infinite;
-  --animate-reflexo: reflexo 6s ease-in-out infinite;
 }
 
 /* ---------- Animações do tema praia ---------- */
@@ -41,21 +39,9 @@
   to   { transform: translateX(110vw); }
 }
 
-/* Sol "respirando" sobre o horizonte */
-@keyframes sol {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50%      { transform: translateY(6px) scale(1.03); }
-}
-
-/* Brilho da água passando pela superfície */
-@keyframes reflexo {
-  0%, 100% { opacity: 0.15; transform: scaleX(0.8); }
-  50%      { opacity: 0.45; transform: scaleX(1); }
-}
-
 /* Quem pede menos movimento no sistema não vê animações decorativas */
 @media (prefers-reduced-motion: reduce) {
-  .animate-onda-lenta, .animate-onda-rapida, .animate-nuvem, .animate-sol, .animate-reflexo {
+  .animate-onda-lenta, .animate-onda-rapida, .animate-nuvem {
     animation: none !important;
   }
 }
@@ -72,6 +58,12 @@
 
   a {
     text-decoration: none;
+  }
+
+  /* Títulos que recebem foco por código depois da troca de página (Kit/Transicao.jsx):
+     o foco serve ao leitor de tela, não precisa de moldura visível num elemento que não é clicável */
+  h1[tabindex="-1"]:focus {
+    outline: none;
   }
 }
 

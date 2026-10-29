@@ -63,7 +63,7 @@ function ContactForm() {
     const inputClasses = "w-full rounded-2xl border border-areia-escura bg-white px-4 py-4 text-oceano transition-colors duration-300 placeholder:text-[#5A6B82] focus:border-mar focus:outline-none focus:ring-2 focus:ring-mar/30 dark:border-white/15 dark:bg-oceano-fundo dark:text-white dark:placeholder:text-slate-400 dark:focus:border-[#4FD1C5]";
 
     return (
-        <div className="container py-20 md:py-28">
+        <div id="mensagem" className="container scroll-mt-20 py-20 md:py-28">
             <Reveal className="mx-auto flex max-w-2xl flex-col items-center cartao p-8 text-center shadow-sm md:p-14">
                 <h2 className="font-serif text-3xl md:text-4xl">
                     Vamos conversar?

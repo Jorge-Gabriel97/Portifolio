@@ -21,7 +21,7 @@ const STEPS = [
 
 function Methodology() {
     return (
-        <section className="py-20 md:py-28">
+        <section id="como-trabalho" className="scroll-mt-20 py-20 md:py-28">
             <TituloSecao titulo="Como eu trabalho">
                 Aplico o Follow the Data Flow, método que aprendi nos estudos: rastrear cada dado do ponto de origem até a tela, evitando os bugs que nascem de suposição.
             </TituloSecao>

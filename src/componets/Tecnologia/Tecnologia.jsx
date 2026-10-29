@@ -148,7 +148,7 @@ function Profundimetro({ progresso, escuro, opacidade }) {
     return (
         <MotionDiv
             style={{ opacity: opacidade }}
-            className={`absolute right-5 top-1/2 hidden h-[52vh] -translate-y-1/2 gap-3 font-mono text-[10px] uppercase tracking-wider transition-colors duration-500 lg:flex ${escuro ? "text-areia/55" : "text-oceano/60"}`}
+            className={`absolute right-8 top-1/2 hidden h-[52vh] -translate-y-1/2 gap-3 font-mono text-[10px] uppercase tracking-wider transition-colors duration-500 lg:flex ${escuro ? "text-areia/55" : "text-oceano/60"}`}
             aria-hidden="true"
         >
             <div className="relative w-px bg-current opacity-60">

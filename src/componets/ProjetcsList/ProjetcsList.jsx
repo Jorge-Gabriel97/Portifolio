@@ -38,13 +38,13 @@ function ProjetcsList() {
     const toggleDescription = (id) => setExpandedRepoId((current) => (current === id ? null : id));
 
     return (
-        <div className="py-20 md:py-28">
+        <div id="projetos" className="scroll-mt-20 py-20 md:py-28">
             <TituloSecao titulo="O que eu já construí">
                 Projetos de estudo e de uso real, com o código aberto no GitHub.
             </TituloSecao>
 
             {/* Case em destaque */}
-            <div className="mt-12 grid gap-6">
+            <div id="destaque" className="mt-12 grid scroll-mt-24 gap-6">
                 {FEATURED_CASES.map((featured, index) => {
                     const repo = repos.find((r) => r.name === featured.repoName);
                     if (!repo) return null;
@@ -93,7 +93,7 @@ function ProjetcsList() {
             {loading ? (
                 <p className="mt-16 text-center text-oceano/75 dark:text-slate-400">Carregando projetos...</p>
             ) : (
-                <div className="mt-12 grid items-start gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <div id="repositorios" className="mt-12 grid scroll-mt-24 items-start gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {otherRepos.slice(0, visibleCount).map((repo) => (
                         <div key={repo.id} className={`cartao flex flex-col overflow-hidden p-5 transition-shadow duration-300 hover:shadow-md`}>
                             <div className="h-40 w-full flex-shrink-0 overflow-hidden rounded-xl bg-areia-escura dark:bg-oceano">

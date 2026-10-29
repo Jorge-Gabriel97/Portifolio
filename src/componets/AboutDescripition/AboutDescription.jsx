@@ -14,7 +14,7 @@ const HISTORIA = [
 
 function AboutDescription() {
     return (
-        <div className="grid gap-14 py-20 md:grid-cols-5 md:py-28">
+        <div id="quem-sou" className="grid scroll-mt-20 gap-14 py-20 md:grid-cols-5 md:py-28">
             <Reveal className="md:col-span-3">
                 <h2 className="font-serif text-3xl md:text-4xl">Quem eu sou</h2>
                 {HISTORIA.map((paragrafo) => (

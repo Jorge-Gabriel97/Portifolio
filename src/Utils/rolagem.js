@@ -26,3 +26,14 @@ export function useSecaoFixada() {
 
     return { ref, progresso: scrollYProgress, irPara };
 }
+
+// Rola até a seção com esse id. O topo da página não precisa de seção: "inicio" volta ao começo.
+export function rolarPara(id) {
+    const suave = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const comportamento = suave ? "smooth" : "auto";
+    if (id === "inicio") {
+        window.scrollTo({ top: 0, behavior: comportamento });
+        return;
+    }
+    document.getElementById(id)?.scrollIntoView({ behavior: comportamento, block: "start" });
+}

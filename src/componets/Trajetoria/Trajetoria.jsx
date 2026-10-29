@@ -9,7 +9,7 @@ import { EXPERIENCIAS } from "../../dados/perfil";
  */
 function Trajetoria() {
     return (
-        <section aria-labelledby="titulo-trajetoria" className="py-20 md:py-28">
+        <section id="trajetoria" aria-labelledby="titulo-trajetoria" className="scroll-mt-20 py-20 md:py-28">
             <TituloSecao id="titulo-trajetoria" titulo="Trajetória">
                 Antes de programar profissionalmente, aprendi a investigar sistemas em produção: primeiro no suporte técnico, hoje na área de redes.
             </TituloSecao>

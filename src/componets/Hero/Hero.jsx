@@ -33,6 +33,7 @@ function Nuvem({ className, style }) {
 function Hero() {
     return (
         <section
+            id="inicio"
             aria-label="Apresentação"
             className="relative isolate flex min-h-[620px] items-center overflow-hidden rounded-t-[40px] bg-gradient-to-b from-oceano via-[#2C5282] to-[#E9A46A] px-6 pb-28 pt-16 md:px-16"
         >

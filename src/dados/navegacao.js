@@ -73,3 +73,6 @@ export const NAV_CONTATO = montar(
     ],
     "/contact",
 );
+
+// Nome que aparece na onda de transição ao chegar em cada página
+export const TITULO_DA_ROTA = Object.fromEntries(PAGINAS.map((p) => [p.to, p.to === "/projects" ? "Projetos" : p.nome]));

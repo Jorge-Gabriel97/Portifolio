@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { AppContext } from "../contexts/Appcontext.jsx";
+import { AppContext } from "../contexts/AppContext.js";
 import Button from '../Button/Button';
 import Reveal from '../../Utils/Reveal';
 import TituloSecao from '../Kit/TituloSecao';

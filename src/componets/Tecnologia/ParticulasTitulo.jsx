@@ -80,6 +80,11 @@ function ParticulasTitulo({ texto, cores, progresso }) {
             const dpr = Math.min(window.devicePixelRatio || 1, 2);
             largura = canvas.clientWidth;
             altura = canvas.clientHeight;
+            // Escondido (celular, onde a versão fixada não aparece): não há o que desenhar
+            if (!largura || !altura) {
+                particulas = [];
+                return;
+            }
             canvas.width = largura * dpr;
             canvas.height = altura * dpr;
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);

@@ -7,7 +7,7 @@ const MotionNav = motion.nav;
 //Assets
 import Logo from "../../assets/foto-jorge.jpg";
 
-import { AppContext } from '../contexts/Appcontext.jsx';
+import { AppContext } from '../contexts/AppContext.js';
 
 //Components
 import Button from '../Button/Button';

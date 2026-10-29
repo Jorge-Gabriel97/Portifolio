@@ -11,7 +11,7 @@ import Camadas, { AmostraTraco } from "./Camadas";
 import Ondas from "../Praia/Ondas";
 import Rotulo from "../Kit/Rotulo";
 import ChipRepositorio from "../Kit/ChipRepositorio";
-import { AppContext } from "../contexts/Appcontext.jsx";
+import { AppContext } from "../contexts/AppContext.js";
 import { ESTUDANDO, GRUPOS } from "../Habilidades/dadosHabilidades";
 import { faixa, useSecaoFixada } from "../../Utils/rolagem";
 

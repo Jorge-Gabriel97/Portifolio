@@ -1,8 +1,8 @@
-import { createContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { AppContext } from './AppContext.js';
 // 1. AQUI ESTAVA O ERRO! Agora importamos a função exata que existe no seu arquivo.
 import { getGithubRepos } from '../../Services/apiServices.js';
 
-export const AppContext = createContext(null);
 
 export const AppProvider = ({ children }) => {
     // Agora o contexto vai guardar os seus repositórios do GitHub em vez de "textos/idiomas"

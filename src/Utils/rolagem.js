@@ -66,3 +66,14 @@ export function rolarPara(id) {
     const margem = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
     rolarAte(el.getBoundingClientRect().top + window.scrollY - margem);
 }
+
+// Trava a página atrás de uma janela aberta (ficha de projeto) e libera de volta
+export function pausarRolagem() {
+    lenis?.stop();
+    document.documentElement.style.overflow = "hidden";
+}
+
+export function retomarRolagem() {
+    document.documentElement.style.overflow = "";
+    lenis?.start();
+}

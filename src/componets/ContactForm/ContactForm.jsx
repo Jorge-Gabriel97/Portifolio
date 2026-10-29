@@ -1,5 +1,10 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Reveal from "../../Utils/Reveal";
+import TextoRevelado from "../Kit/TextoRevelado";
+import MensagemNaGarrafa from "./MensagemNaGarrafa";
+
+const MotionForm = motion.form;
 
 function ContactForm() {
     const [formData, setFormData] = useState({
@@ -10,6 +15,7 @@ function ContactForm() {
 
     const [formSubmitLoading, setFormSubmitLoading] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [erroEnvio, setErroEnvio] = useState("");
 
     const isValidEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,6 +40,7 @@ function ContactForm() {
 
         if (isFormValid) {
             setFormSubmitLoading(true);
+            setErroEnvio("");
             try {
                 const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
@@ -48,11 +55,11 @@ function ContactForm() {
                     setFormSubmitted(true);
                     setFormData({ name: "", email: "", message: "" });
                 } else {
-                    alert('Erro ao enviar formulário: ' + response.statusText);
+                    setErroEnvio("Não consegui enviar agora. Tente de novo em instantes ou me escreva direto pelo e-mail do rodapé.");
                 }
             }
-            catch (error) {
-                alert("Erro ao enviar formulário: " + error.message);
+            catch {
+                setErroEnvio("Sem conexão com o servidor. Confira sua internet e tente de novo, ou me escreva pelo e-mail do rodapé.");
             }
             finally {
                 setFormSubmitLoading(false);
@@ -65,13 +72,21 @@ function ContactForm() {
     return (
         <div id="mensagem" className="container scroll-mt-20 py-20 md:py-28">
             <Reveal className="mx-auto flex max-w-2xl flex-col items-center cartao p-8 text-center shadow-sm md:p-14">
-                <h2 className="font-serif text-3xl md:text-4xl">
-                    Vamos conversar?
-                </h2>
+                <TextoRevelado texto="Vamos conversar?" className="font-serif text-3xl md:text-4xl" />
                 <p className="mt-4 text-lg text-oceano/80 dark:text-slate-300">
                     Vaga, projeto freelance ou dúvida sobre algum repositório: me escreva e eu respondo por e-mail.
                 </p>
-                <form className="mt-10 flex w-full flex-col gap-5" onSubmit={handleSubmit}>
+                {/* Ao enviar, o formulário encolhe e "entra na garrafa", que cai no mar */}
+                <AnimatePresence mode="wait" initial={false}>
+                {formSubmitted ? (
+                    <MensagemNaGarrafa key="garrafa" aoEscreverOutra={() => setFormSubmitted(false)} />
+                ) : (
+                <MotionForm
+                    key="formulario"
+                    className="mt-10 flex w-full flex-col gap-5"
+                    onSubmit={handleSubmit}
+                    exit={{ opacity: 0, scale: 0.2, y: 120, rotate: -10, transition: { duration: 0.45, ease: [0.5, 0, 0.75, 0] } }}
+                >
                     <input
                         type="text"
                         name="name"
@@ -110,12 +125,14 @@ function ContactForm() {
                     >
                         {formSubmitLoading ? "Enviando..." : "Enviar mensagem ➔"}
                     </button>
-                </form>
-                {formSubmitted && (
-                    <p role="status" className="mt-4 font-medium text-[#22716F] dark:text-[#4FD1C5]">
-                        Obrigado! Entrarei em contato em breve.
-                    </p>
+                    {erroEnvio && (
+                        <p role="alert" className="font-medium text-coral dark:text-[#FBD38D]">
+                            {erroEnvio}
+                        </p>
+                    )}
+                </MotionForm>
                 )}
+                </AnimatePresence>
             </Reveal>
         </div>
     );

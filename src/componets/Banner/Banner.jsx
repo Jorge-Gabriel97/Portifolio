@@ -2,6 +2,7 @@ import Reveal from "../../Utils/Reveal";
 import { useRef } from "react";
 import Ondas from "../Praia/Ondas";
 import PorDoSol from "../Praia/PorDoSol";
+import TextoRevelado from "../Kit/TextoRevelado";
 
 /*
  * BANNER das páginas internas: o mesmo fim de tarde do topo da página inicial, em versão curta,
@@ -24,7 +25,7 @@ function Banner({ title, subtitle }) {
             {/* z-10 mantém o texto acima das ondas */}
             <div className="relative z-10 w-full px-6 md:px-16">
                 <Reveal className="pb-24 md:pb-28">
-                    <h1 className="font-serif text-4xl text-white md:text-5xl">{title}</h1>
+                    <TextoRevelado como="h1" texto={title} aoCarregar atraso={0.9} className="font-serif text-4xl text-white md:text-5xl" />
                     {subtitle && <p className="mt-3 max-w-xl text-lg text-slate-100">{subtitle}</p>}
                 </Reveal>
             </div>

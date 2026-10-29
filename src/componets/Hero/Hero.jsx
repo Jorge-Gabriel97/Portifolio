@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Reveal from "../../Utils/Reveal";
 import Ondas from "../Praia/Ondas";
 import PorDoSol from "../Praia/PorDoSol";
+import TextoRevelado from "../Kit/TextoRevelado";
 
 /*
  * HERO: fim de tarde na praia.
@@ -53,9 +54,13 @@ function Hero() {
 
             <Reveal className="relative w-full md:w-3/5">
                 <p className="text-sm font-medium uppercase tracking-[0.2em] text-[#FBD38D]">{HERO.local}</p>
-                <h1 className="mt-4 font-serif text-4xl leading-[1.15] text-white sm:text-5xl md:text-6xl">
-                    {HERO.titulo}
-                </h1>
+                <TextoRevelado
+                    como="h1"
+                    texto={HERO.titulo}
+                    aoCarregar
+                    atraso={0.9}
+                    className="mt-4 font-serif text-4xl leading-[1.15] text-white sm:text-5xl md:text-6xl"
+                />
                 <p className="mt-6 max-w-xl text-lg text-slate-100">{HERO.resumo}</p>
 
                 <div className="mt-10 flex flex-wrap items-center gap-4">

@@ -1,11 +1,16 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AppContext } from "../contexts/AppContext.js";
 import Button from '../Button/Button';
 import Reveal from '../../Utils/Reveal';
 import TituloSecao from '../Kit/TituloSecao';
+import CartaoInclinavel from '../Kit/CartaoInclinavel';
+import FichaProjeto from './FichaProjeto';
 
-const MotionParagraph = motion.p;
+const MotionDiv = motion.div;
+
+// Prévia gerada pelo próprio GitHub para cada repositório
+const imagemDoRepo = (repo) => `https://opengraph.githubassets.com/1/${repo.owner.login}/${repo.name}?v=${repo.updated_at}`;
 
 // Repositório "especial" do GitHub (README de perfil): não é um projeto, fica fora da vitrine.
 const EXCLUDED_REPOS = ["Jorge-Gabriel97"];
@@ -27,7 +32,7 @@ const FEATURED_CASES = [
 function ProjetcsList() {
     const { repos, loading } = useContext(AppContext);
     const [visibleCount, setVisibleCount] = useState(8);
-    const [expandedRepoId, setExpandedRepoId] = useState(null);
+    const [fichaAberta, setFichaAberta] = useState(null);
 
     const featuredNames = FEATURED_CASES.map((c) => c.repoName);
     const otherRepos = repos.filter(
@@ -35,7 +40,14 @@ function ProjetcsList() {
     );
 
     const showMoreProjects = () => setVisibleCount((count) => count + 8);
-    const toggleDescription = (id) => setExpandedRepoId((current) => (current === id ? null : id));
+    const repoDaFicha = repos.find((r) => r.id === fichaAberta);
+
+    // Ao fechar a ficha, o foco volta para o botão que a abriu
+    const fecharFicha = useCallback(() => {
+        const id = fichaAberta;
+        setFichaAberta(null);
+        setTimeout(() => document.querySelector(`[data-ficha="${id}"]`)?.focus(), 60);
+    }, [fichaAberta]);
 
     return (
         <div id="projetos" className="scroll-mt-20 py-20 md:py-28">
@@ -50,6 +62,7 @@ function ProjetcsList() {
                     if (!repo) return null;
                     return (
                         <Reveal key={repo.id} delay={index * 0.1}>
+                            <CartaoInclinavel intensidade={3} className="rounded-3xl">
                             <a
                                 href={repo.html_url}
                                 target="_blank"
@@ -84,6 +97,7 @@ function ProjetcsList() {
                                     </span>
                                 </div>
                             </a>
+                            </CartaoInclinavel>
                         </Reveal>
                     );
                 })}
@@ -93,53 +107,54 @@ function ProjetcsList() {
             {loading ? (
                 <p className="mt-16 text-center text-oceano/75 dark:text-slate-400">Carregando projetos...</p>
             ) : (
-                <div id="repositorios" className="mt-12 grid scroll-mt-24 items-start gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <div id="repositorios" className="mt-12 grid scroll-mt-24 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {otherRepos.slice(0, visibleCount).map((repo) => (
-                        <div key={repo.id} className={`cartao flex flex-col overflow-hidden p-5 transition-shadow duration-300 hover:shadow-md`}>
-                            <div className="h-40 w-full flex-shrink-0 overflow-hidden rounded-xl bg-areia-escura dark:bg-oceano">
-                                <img
-                                    src={`https://opengraph.githubassets.com/1/${repo.owner.login}/${repo.name}?v=${repo.updated_at}`}
-                                    alt=""
-                                    loading="lazy"
-                                    className="h-full w-full object-cover"
-                                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                                />
-                            </div>
+                        // Mesmo layoutId da ficha: ao abrir, este cartão "cresce" até virar a janela.
+                        // Enquanto a ficha está aberta, o cartão fica invisível guardando o lugar.
+                        <MotionDiv
+                            key={repo.id}
+                            layoutId={`cartao-${repo.id}`}
+                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            className={`rounded-3xl ${fichaAberta === repo.id ? "invisible" : ""}`}
+                        >
+                            <CartaoInclinavel className="rounded-3xl">
+                                <div className="cartao flex h-full flex-col overflow-hidden p-5 transition-shadow duration-300 hover:shadow-lg">
+                                    <div className="h-40 w-full flex-shrink-0 overflow-hidden rounded-xl bg-areia-escura dark:bg-oceano">
+                                        <img
+                                            src={imagemDoRepo(repo)}
+                                            alt=""
+                                            loading="lazy"
+                                            className="h-full w-full object-cover"
+                                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                        />
+                                    </div>
 
-                            <h3 className="mt-4 truncate text-lg font-semibold">
-                                {repo.name}
-                            </h3>
+                                    <h3 className="mt-4 truncate text-lg font-semibold">{repo.name}</h3>
+                                    <p className="mt-1 line-clamp-2 text-sm text-oceano/75 dark:text-slate-300">
+                                        {repo.description || "Projeto em desenvolvimento"}
+                                    </p>
 
-                            <button
-                                onClick={() => toggleDescription(repo.id)}
-                                aria-expanded={expandedRepoId === repo.id}
-                                className="mt-2 w-fit cursor-pointer rounded-full border border-oceano/40 px-4 py-1.5 text-sm font-semibold transition-colors duration-300 hover:bg-oceano hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-mar dark:border-white/40 dark:hover:bg-areia dark:hover:text-oceano"
-                            >
-                                {expandedRepoId === repo.id ? 'Ocultar detalhes ↑' : 'Ver detalhes ↓'}
-                            </button>
-
-                            <AnimatePresence>
-                                {expandedRepoId === repo.id && (
-                                    <MotionParagraph
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: 'auto' }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        className="mt-3 overflow-hidden text-sm leading-relaxed text-oceano/85 dark:text-slate-300"
-                                    >
-                                        {repo.description ? repo.description : "Projeto em desenvolvimento"}
-                                    </MotionParagraph>
-                                )}
-                            </AnimatePresence>
-
-                            <a
-                                href={repo.html_url}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="mt-auto pt-4 font-semibold text-[#22716F] hover:underline dark:text-[#4FD1C5]"
-                            >
-                                Ver repositório ➔
-                            </a>
-                        </div>
+                                    <div className="mt-auto flex items-center justify-between gap-3 pt-5">
+                                        <button
+                                            type="button"
+                                            data-ficha={repo.id}
+                                            onClick={() => setFichaAberta(repo.id)}
+                                            className="cursor-pointer rounded-full border border-oceano/40 px-4 py-1.5 text-sm font-semibold transition-colors duration-300 hover:bg-oceano hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-mar dark:border-white/40 dark:hover:bg-areia dark:hover:text-oceano"
+                                        >
+                                            Ficha técnica +
+                                        </button>
+                                        <a
+                                            href={repo.html_url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="text-sm font-semibold text-[#22716F] hover:underline dark:text-[#4FD1C5]"
+                                        >
+                                            GitHub ↗
+                                        </a>
+                                    </div>
+                                </div>
+                            </CartaoInclinavel>
+                        </MotionDiv>
                     ))}
                 </div>
             )}
@@ -151,6 +166,11 @@ function ProjetcsList() {
                     </Button>
                 </div>
             )}
+            <AnimatePresence>
+                {repoDaFicha && (
+                    <FichaProjeto key={repoDaFicha.id} repo={repoDaFicha} imagem={imagemDoRepo(repoDaFicha)} aoFechar={fecharFicha} />
+                )}
+            </AnimatePresence>
         </div>
     );
 }

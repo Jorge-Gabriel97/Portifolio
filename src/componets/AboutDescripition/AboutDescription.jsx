@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Reveal from "../../Utils/Reveal";
+import TextoRevelado from "../Kit/TextoRevelado";
 import { FORMACAO } from "../../dados/perfil";
 
 /*
@@ -16,7 +17,7 @@ function AboutDescription() {
     return (
         <div id="quem-sou" className="grid scroll-mt-20 gap-14 py-20 md:grid-cols-5 md:py-28">
             <Reveal className="md:col-span-3">
-                <h2 className="font-serif text-3xl md:text-4xl">Quem eu sou</h2>
+                <TextoRevelado texto="Quem eu sou" className="font-serif text-3xl md:text-4xl" />
                 {HISTORIA.map((paragrafo) => (
                     <p key={paragrafo.slice(0, 20)} className="mt-6 text-lg leading-relaxed text-oceano/85 dark:text-slate-300">
                         {paragrafo}
@@ -31,7 +32,7 @@ function AboutDescription() {
             </Reveal>
 
             <Reveal delay={0.1} className="md:col-span-2">
-                <h2 className="font-serif text-3xl md:text-4xl">Formação</h2>
+                <TextoRevelado texto="Formação" className="font-serif text-3xl md:text-4xl" />
                 <ul className="mt-6 space-y-4">
                     {FORMACAO.map((f) => (
                         <li key={f.curso} className="cartao p-5">

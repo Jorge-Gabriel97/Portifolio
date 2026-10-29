@@ -1,7 +1,10 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Reveal from "../../Utils/Reveal";
 import TextoRevelado from "../Kit/TextoRevelado";
 import { FORMACAO } from "../../dados/perfil";
+import { faixa } from "../../Utils/rolagem";
 
 /*
  * SOBRE MIM: história + formação.
@@ -13,16 +16,67 @@ const HISTORIA = [
     "Essa bagagem aparece no meu código: antes de escrever, procuro entender por onde o dado passa e onde ele pode quebrar. Construo back-ends com Java e Spring Boot e front-ends com React e TypeScript, e todos os meus projetos estão abertos no GitHub.",
 ];
 
+const MotionSpan = motion.span;
+const MotionDiv = motion.div;
+
+// Cada palavra acende quando a luz (o progresso da rolagem) passa pelo trecho dela
+function Palavra({ luz, de, ate, children }) {
+    const opacidade = useTransform(luz, (p) => 0.22 + faixa(p, de, ate) * 0.78);
+    return <MotionSpan style={{ opacity: opacidade }}>{children}</MotionSpan>;
+}
+
+/*
+ * A luz do farol chegando: o texto da história começa apagado e acende palavra por palavra
+ * conforme a rolagem, com um brilho quente atrás. Sem animação para quem pede menos movimento.
+ */
+function HistoriaIluminada() {
+    const reduzirMovimento = useReducedMotion();
+    const ref = useRef(null);
+    const { scrollYProgress: luz } = useScroll({ target: ref, offset: ["start 0.85", "end 0.55"] });
+    const brilho = useTransform(luz, (p) => faixa(p, 0, 0.4));
+
+    if (reduzirMovimento) {
+        return HISTORIA.map((paragrafo) => (
+            <p key={paragrafo.slice(0, 20)} className="mt-6 text-lg leading-relaxed text-oceano/85 dark:text-slate-300">
+                {paragrafo}
+            </p>
+        ));
+    }
+
+    const paragrafos = HISTORIA.map((p) => p.split(" "));
+    const total = paragrafos.reduce((soma, palavras) => soma + palavras.length, 0);
+    let contador = 0;
+
+    return (
+        <div ref={ref} className="relative">
+            <MotionDiv
+                style={{ opacity: brilho }}
+                className="pointer-events-none absolute inset-x-0 -inset-y-6 -z-10 bg-[radial-gradient(ellipse_at_top_left,rgba(251,211,141,0.35),transparent_65%)] dark:bg-[radial-gradient(ellipse_at_top_left,rgba(251,211,141,0.12),transparent_65%)]"
+                aria-hidden="true"
+            />
+            {paragrafos.map((palavras, i) => (
+                <p key={i} className="mt-6 text-lg leading-relaxed text-oceano/85 dark:text-slate-300">
+                    {palavras.map((palavra, j) => {
+                        const inicio = contador++ / total;
+                        return (
+                            <Palavra key={j} luz={luz} de={inicio} ate={inicio + 1 / total}>
+                                {palavra}
+                                {j < palavras.length - 1 && " "}
+                            </Palavra>
+                        );
+                    })}
+                </p>
+            ))}
+        </div>
+    );
+}
+
 function AboutDescription() {
     return (
         <div id="quem-sou" className="grid scroll-mt-20 gap-14 py-20 md:grid-cols-5 md:py-28">
             <Reveal className="md:col-span-3">
                 <TextoRevelado texto="Quem eu sou" className="font-serif text-3xl md:text-4xl" />
-                {HISTORIA.map((paragrafo) => (
-                    <p key={paragrafo.slice(0, 20)} className="mt-6 text-lg leading-relaxed text-oceano/85 dark:text-slate-300">
-                        {paragrafo}
-                    </p>
-                ))}
+                <HistoriaIluminada />
                 <Link
                     to="/"
                     className="mt-8 inline-block font-semibold text-[#22716F] underline decoration-2 underline-offset-4 hover:text-oceano dark:text-[#4FD1C5] dark:hover:text-white"

@@ -2,15 +2,16 @@ import Reveal from "../../Utils/Reveal";
 import { useRef } from "react";
 import Ondas from "../Praia/Ondas";
 import PorDoSol from "../Praia/PorDoSol";
+import Farol from "../Praia/Farol";
 import TextoRevelado from "../Kit/TextoRevelado";
 
 /*
  * BANNER das páginas internas: o mesmo fim de tarde do topo da página inicial, em versão curta,
  * com o mesmo pôr do sol que acompanha a rolagem.
- * Props: title (obrigatório) e subtitle (opcional).
+ * Props: title (obrigatório), subtitle (opcional) e cena: "porDoSol" (padrão) ou "farol" (noite, página Sobre).
  * A prop "image" das versões anteriores não é mais usada; ficou aceita para não quebrar chamadas antigas.
  */
-function Banner({ title, subtitle }) {
+function Banner({ title, subtitle, cena = "porDoSol" }) {
     const secaoRef = useRef(null);
     return (
         <section
@@ -19,7 +20,7 @@ function Banner({ title, subtitle }) {
             aria-label={title}
             className="relative isolate flex h-72 items-end overflow-hidden rounded-t-[40px] bg-gradient-to-b from-oceano via-[#2C5282] to-[#E9A46A] md:h-80"
         >
-            <PorDoSol alvoRef={secaoRef} variante="banner" />
+            {cena === "farol" ? <Farol alvoRef={secaoRef} /> : <PorDoSol alvoRef={secaoRef} variante="banner" />}
             <div className="absolute inset-0 -z-10 bg-gradient-to-r from-oceano/85 via-oceano/40 to-transparent" />
 
             {/* z-10 mantém o texto acima das ondas */}

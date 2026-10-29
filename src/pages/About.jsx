@@ -11,7 +11,7 @@ function About() {
         <>
             <Header />
             <Abertura nav={NAV_SOBRE}>
-                <Banner title="Sobre mim" subtitle="Do suporte técnico e das redes ao desenvolvimento Full Stack." />
+                <Banner cena="farol" title="Sobre mim" subtitle="Do suporte técnico e das redes ao desenvolvimento Full Stack." />
             </Abertura>
             <main className="container flex-1">
                 <AboutDescription />

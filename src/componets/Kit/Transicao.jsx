@@ -10,6 +10,7 @@ import { TITULO_DA_ROTA } from "../../dados/navegacao";
  * Ao sair de uma página, o mar sobe e cobre a tela (ondas na frente); a página nova nasce coberta,
  * mostra o nome dela e o mar recua para cima, revelando o conteúdo (ondas atrás).
  * Usada em App.jsx com AnimatePresence mode="wait". Com "reduzir movimento" vira um fade simples.
+ * titulo: nome da página quando a rota não está na navegação (ex.: a 404).
  */
 const MotionDiv = motion.div;
 const MotionP = motion.p;
@@ -61,7 +62,7 @@ function Mar({ titulo }) {
     );
 }
 
-function Transicao({ children }) {
+function Transicao({ children, titulo }) {
     const reduzirMovimento = useReducedMotion();
     const { pathname } = useLocation();
 
@@ -72,9 +73,9 @@ function Transicao({ children }) {
 
     // Título da aba de cada página (também é o que aparece no Google e nos favoritos)
     useEffect(() => {
-        const nome = TITULO_DA_ROTA[pathname];
+        const nome = titulo ?? TITULO_DA_ROTA[pathname];
         document.title = pathname === "/" || !nome ? TITULO_PADRAO : `${nome} · Jorge Gabriel`;
-    }, [pathname]);
+    }, [pathname, titulo]);
 
     // Depois da troca, o foco vai para o título da página nova: quem navega por teclado
     // ou leitor de tela não fica "perdido" no link da página anterior
@@ -103,7 +104,7 @@ function Transicao({ children }) {
     return (
         <>
             {children}
-            <Mar titulo={TITULO_DA_ROTA[pathname] ?? ""} />
+            <Mar titulo={titulo ?? TITULO_DA_ROTA[pathname] ?? ""} />
         </>
     );
 }

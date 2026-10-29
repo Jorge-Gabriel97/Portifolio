@@ -34,7 +34,7 @@ function AboutDescription() {
                 <h2 className="font-serif text-3xl md:text-4xl">Formação</h2>
                 <ul className="mt-6 space-y-4">
                     {FORMACAO.map((f) => (
-                        <li key={f.curso} className="rounded-3xl border border-areia-escura bg-white/70 p-5 dark:border-white/10 dark:bg-oceano/60">
+                        <li key={f.curso} className="cartao p-5">
                             <p className="font-semibold">{f.curso}</p>
                             <p className="mt-1 text-oceano/80 dark:text-slate-300">{f.instituicao}</p>
                             <p className="mt-3 flex flex-wrap items-center gap-2 text-sm text-oceano/75 dark:text-slate-400">

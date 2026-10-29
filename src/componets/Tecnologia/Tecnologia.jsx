@@ -1,17 +1,19 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import {
     AnimatePresence,
     motion,
     useMotionValueEvent,
     useReducedMotion,
-    useScroll,
     useTransform,
 } from "framer-motion";
 import ParticulasTitulo from "./ParticulasTitulo";
 import Camadas, { AmostraTraco } from "./Camadas";
 import Ondas from "../Praia/Ondas";
+import Rotulo from "../Kit/Rotulo";
+import ChipRepositorio from "../Kit/ChipRepositorio";
 import { AppContext } from "../contexts/Appcontext.jsx";
-import { ESTUDANDO, GITHUB, GRUPOS } from "../Habilidades/dadosHabilidades";
+import { ESTUDANDO, GRUPOS } from "../Habilidades/dadosHabilidades";
+import { faixa, useSecaoFixada } from "../../Utils/rolagem";
 
 /*
  * TECNOLOGIA: um mergulho pela stack.
@@ -45,7 +47,6 @@ const GRAOS = {
 };
 
 const numero = (n) => String(n).padStart(2, "0");
-const faixa = (p, de, ate) => Math.min(1, Math.max(0, (p - de) / (ate - de)));
 const inicioDaCamada = (indice) => INICIO_CAMADAS + (indice * (1 - INICIO_CAMADAS)) / TOTAL;
 
 function misturar(corA, corB, t) {
@@ -75,16 +76,12 @@ function cores(escuro) {
         ? {
               texto: "text-areia",
               suave: "text-areia/65",
-              rotulo: "text-areia/55",
               acento: "text-[#F6AD55]",
-              chip: "border-white/20 text-areia/75 hover:border-[#F6AD55] hover:text-[#F6AD55] focus-visible:outline-[#F6AD55]",
           }
         : {
               texto: "text-oceano",
               suave: "text-oceano/70",
-              rotulo: "text-oceano/60",
               acento: "text-coral",
-              chip: "border-oceano/20 text-oceano/75 hover:border-coral hover:text-coral focus-visible:outline-coral",
           };
 }
 
@@ -101,28 +98,13 @@ function ListaHabilidades({ grupo, escuro }) {
                     <ul className="mt-1.5 flex flex-wrap gap-1.5">
                         {h.projetos.map((repo) => (
                             <li key={repo}>
-                                <a
-                                    href={`${GITHUB}/${repo}`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className={`inline-block rounded border px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider transition focus-visible:outline focus-visible:outline-2 ${c.chip}`}
-                                >
-                                    {repo} ↗
-                                </a>
+                                <ChipRepositorio repo={repo} fundo={escuro ? "escuro" : "claro"} />
                             </li>
                         ))}
                     </ul>
                 </li>
             ))}
         </ul>
-    );
-}
-
-function Rotulo({ escuro, children }) {
-    return (
-        <p className={`font-mono text-xs uppercase tracking-[0.2em] transition-colors duration-500 ${cores(escuro).rotulo}`}>
-            {children}
-        </p>
     );
 }
 
@@ -166,7 +148,7 @@ function Profundimetro({ progresso, escuro, opacidade }) {
     return (
         <MotionDiv
             style={{ opacity: opacidade }}
-            className={`absolute right-5 top-1/2 hidden h-[52vh] -translate-y-1/2 gap-3 font-mono text-[10px] uppercase tracking-wider transition-colors duration-500 lg:flex ${c.rotulo}`}
+            className={`absolute right-5 top-1/2 hidden h-[52vh] -translate-y-1/2 gap-3 font-mono text-[10px] uppercase tracking-wider transition-colors duration-500 lg:flex ${escuro ? "text-areia/55" : "text-oceano/60"}`}
             aria-hidden="true"
         >
             <div className="relative w-px bg-current opacity-60">
@@ -187,14 +169,11 @@ function Profundimetro({ progresso, escuro, opacidade }) {
 }
 
 function VersaoFixada({ temaEscuro }) {
-    const ref = useRef(null);
-    const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+    const { ref, progresso: scrollYProgress, irPara } = useSecaoFixada();
     const [ativa, setAtiva] = useState(0);
     const [submerso, setSubmerso] = useState(false);
 
     const tema = temaEscuro ? "escuro" : "claro";
-    // Funções em vez de faixas [de, até]: com faixas o Framer passa a opacidade para o navegador
-    // animar sozinho (ScrollTimeline), que calcula errado dentro desta seção fixada.
     const fundo = useTransform(scrollYProgress, (p) => corDaAgua(p, tema));
     const abertura = useTransform(scrollYProgress, (p) => faixa(p, 0.26, 0.38));
     const opacidadeCamadas = useTransform(scrollYProgress, (p) => faixa(p, 0.24, 0.31));
@@ -208,13 +187,6 @@ function VersaoFixada({ temaEscuro }) {
         // Troca a cor do texto no meio da transição da água
         setSubmerso(p >= inicioDaCamada(1) - 0.015);
     });
-
-    const irPara = (indice) => {
-        const secao = ref.current;
-        const percurso = secao.offsetHeight - window.innerHeight;
-        const topo = secao.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top: topo + percurso * (inicioDaCamada(indice) + 0.02), behavior: "smooth" });
-    };
 
     const escuro = temaEscuro || submerso;
     const c = cores(escuro);
@@ -245,7 +217,7 @@ function VersaoFixada({ temaEscuro }) {
                             transition={{ duration: 0.35, ease: "easeOut" }}
                             aria-live="polite"
                         >
-                            <Rotulo escuro={escuro}>
+                            <Rotulo fundo={escuro ? "escuro" : "claro"}>
                                 {numero(ativa + 1)} · {PROFUNDIDADES[ativa].nome}
                             </Rotulo>
                             <h3
@@ -263,7 +235,7 @@ function VersaoFixada({ temaEscuro }) {
 
                     <div className="flex flex-col items-center">
                         <Camadas total={TOTAL} abertura={abertura} ativa={ativa} escuro={escuro} />
-                        <Legenda ativa={ativa} escuro={escuro} aoEscolher={irPara} />
+                        <Legenda ativa={ativa} escuro={escuro} aoEscolher={(i) => irPara(inicioDaCamada(i) + 0.02)} />
                     </div>
                 </MotionDiv>
 
@@ -295,7 +267,7 @@ function VersaoLista({ temaEscuro }) {
                         >
                             <div className="flex items-center gap-4">
                                 <AmostraTraco indice={i} ativa escuro={escuro} />
-                                <Rotulo escuro={escuro}>
+                                <Rotulo fundo={escuro ? "escuro" : "claro"}>
                                     {numero(i + 1)} · {PROFUNDIDADES[i].nome}
                                 </Rotulo>
                             </div>
@@ -338,7 +310,7 @@ function Tecnologia() {
             {/* Volta do mergulho: as ondas devolvem a página para a areia */}
             <div style={{ backgroundColor: leito }} className="relative pb-36 pt-16 md:pb-44">
                 <div className="container">
-                    <Rotulo escuro>Estudando agora</Rotulo>
+                    <Rotulo fundo="escuro">Estudando agora</Rotulo>
                     <ul className="mt-4 flex flex-wrap gap-3">
                         {ESTUDANDO.map((item) => (
                             <li

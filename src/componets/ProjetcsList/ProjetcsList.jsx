@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { AppContext } from "../contexts/Appcontext.jsx";
 import Button from '../Button/Button';
 import Reveal from '../../Utils/Reveal';
+import TituloSecao from '../Kit/TituloSecao';
 
 const MotionParagraph = motion.p;
 
@@ -23,8 +24,6 @@ const FEATURED_CASES = [
     },
 ];
 
-const cardClasse = "rounded-3xl border border-areia-escura bg-white/70 dark:border-white/10 dark:bg-oceano/60";
-
 function ProjetcsList() {
     const { repos, loading } = useContext(AppContext);
     const [visibleCount, setVisibleCount] = useState(8);
@@ -40,14 +39,9 @@ function ProjetcsList() {
 
     return (
         <div className="py-20 md:py-28">
-            <Reveal className="max-w-2xl">
-                <h2 className="font-serif text-3xl md:text-4xl">
-                    O que eu já construí
-                </h2>
-                <p className="mt-4 text-lg text-oceano/80 dark:text-slate-300">
-                    Projetos de estudo e de uso real, com o código aberto no GitHub.
-                </p>
-            </Reveal>
+            <TituloSecao titulo="O que eu já construí">
+                Projetos de estudo e de uso real, com o código aberto no GitHub.
+            </TituloSecao>
 
             {/* Case em destaque */}
             <div className="mt-12 grid gap-6">
@@ -60,7 +54,7 @@ function ProjetcsList() {
                                 href={repo.html_url}
                                 target="_blank"
                                 rel="noreferrer"
-                                className={`${cardClasse} group grid h-full gap-8 p-8 transition-shadow duration-300 hover:shadow-lg md:grid-cols-5 md:p-10`}
+                                className={`cartao group grid h-full gap-8 p-8 transition-shadow duration-300 hover:shadow-lg md:grid-cols-5 md:p-10`}
                             >
                                 <div className="md:col-span-2">
                                     <p className="text-sm font-semibold uppercase tracking-wider text-[#9C4221] dark:text-[#FBD38D]">Em destaque</p>
@@ -101,7 +95,7 @@ function ProjetcsList() {
             ) : (
                 <div className="mt-12 grid items-start gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {otherRepos.slice(0, visibleCount).map((repo) => (
-                        <div key={repo.id} className={`${cardClasse} flex flex-col overflow-hidden p-5 transition-shadow duration-300 hover:shadow-md`}>
+                        <div key={repo.id} className={`cartao flex flex-col overflow-hidden p-5 transition-shadow duration-300 hover:shadow-md`}>
                             <div className="h-40 w-full flex-shrink-0 overflow-hidden rounded-xl bg-areia-escura dark:bg-oceano">
                                 <img
                                     src={`https://opengraph.githubassets.com/1/${repo.owner.login}/${repo.name}?v=${repo.updated_at}`}

@@ -64,7 +64,7 @@ function ContactForm() {
 
     return (
         <div className="container py-20 md:py-28">
-            <Reveal className="mx-auto flex max-w-2xl flex-col items-center rounded-3xl border border-areia-escura bg-white/70 p-8 text-center shadow-sm dark:border-white/10 dark:bg-oceano/60 md:p-14">
+            <Reveal className="mx-auto flex max-w-2xl flex-col items-center cartao p-8 text-center shadow-sm md:p-14">
                 <h2 className="font-serif text-3xl md:text-4xl">
                     Vamos conversar?
                 </h2>

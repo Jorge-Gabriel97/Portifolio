@@ -1,4 +1,5 @@
 import Reveal from "../../Utils/Reveal";
+import TituloSecao from "../Kit/TituloSecao";
 import { EXPERIENCIAS } from "../../dados/perfil";
 
 /*
@@ -9,14 +10,9 @@ import { EXPERIENCIAS } from "../../dados/perfil";
 function Trajetoria() {
     return (
         <section aria-labelledby="titulo-trajetoria" className="py-20 md:py-28">
-            <Reveal className="max-w-2xl">
-                <h2 id="titulo-trajetoria" className="font-serif text-3xl md:text-4xl">
-                    Trajetória
-                </h2>
-                <p className="mt-4 text-lg text-oceano/80 dark:text-slate-300">
-                    Antes de programar profissionalmente, aprendi a investigar sistemas em produção: primeiro no suporte técnico, hoje na área de redes.
-                </p>
-            </Reveal>
+            <TituloSecao id="titulo-trajetoria" titulo="Trajetória">
+                Antes de programar profissionalmente, aprendi a investigar sistemas em produção: primeiro no suporte técnico, hoje na área de redes.
+            </TituloSecao>
 
             <ol className="relative mt-12 space-y-10 border-l-4 border-dotted border-areia-escura pl-8 dark:border-white/15 md:ml-4 md:pl-12">
                 {EXPERIENCIAS.map((exp, indice) => (
@@ -30,7 +26,7 @@ function Trajetoria() {
                             <span className="h-2 w-2 rounded-full bg-white" />
                         </span>
 
-                        <div className="rounded-3xl border border-areia-escura bg-white/70 p-6 dark:border-white/10 dark:bg-oceano/60 md:p-8">
+                        <div className="cartao p-6 md:p-8">
                             <p className="text-sm font-semibold uppercase tracking-wider text-[#22716F] dark:text-[#4FD1C5]">
                                 {exp.periodo}
                             </p>

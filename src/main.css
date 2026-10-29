@@ -91,3 +91,8 @@
     max-width: 1240px;
   }
 }
+
+/* Cartão claro do tema (fundo branco translúcido sobre a areia). Uso: class="cartao p-6" */
+@utility cartao {
+  @apply rounded-3xl border border-areia-escura bg-white/70 dark:border-white/10 dark:bg-oceano/60;
+}
